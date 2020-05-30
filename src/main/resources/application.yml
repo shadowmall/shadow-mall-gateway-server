@@ -1,17 +1,24 @@
 server:
   port: 8002
+
 spring:
   application:
     name: gateway-server
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lowerCaseServiceId: true
+      routes:
+      - id: user-service
+        uri: lb://USER-SERVICE
+        predicates:
+          - Path=/user/**
+        filters:
+          - StripPrefix=1
+
 eureka:
   client:
-    register-with-eureka: true
-    fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8001/eureka/
-zuul:
-  routes: #给服务配置路由
-    user-service:
-      path: /user/**
-    goods-service:
-      path: /goods/**
+      defaultZone: ${EUREKA_URL}
