@@ -8,15 +8,8 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: false
+          enabled: true
           lowerCaseServiceId: true
-      routes:
-      - id: user-service
-        uri: lb://USER-SERVICE
-        predicates:
-          - Path=/user/**
-        filters:
-          - StripPrefix=1
 
 eureka:
   client:
